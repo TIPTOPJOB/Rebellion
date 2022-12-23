@@ -1,0 +1,35 @@
+/*Текст по центру*/
+.it_fo{
+    font-family: 'Beau Rivage', cursive; /*'Italianno'*/
+    color: gold;
+    font-size:121px !important; 
+    /*line-height:30px !important;*/
+}
+body, html {
+    height: 100%;
+}
+body{
+    background-color: black;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/*
+.container p {
+    width: 400px;
+    padding: 15px;
+    background-color: #f1f1f1;
+}
+*/
