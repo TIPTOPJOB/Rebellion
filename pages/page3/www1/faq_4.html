@@ -1,0 +1,562 @@
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script src="analytics.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app220.us.archive.org';v.server_ms=184;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="wombat.js" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("http://www.sbin.org:80/doc/unix-faq/programmer/faq_4.html","20090608164423","https://web.archive.org/","web","/_static/",
+	      "1244479463");
+</script>
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<!-- This HTML file has been created by texi2html 1.51
+     from faq.texi on 1 September 2000 -->
+
+<title>Unix Programming Frequently Asked Questions - 3. Terminal I/O</title>
+
+<link media="all" href="faq_4.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+	<p style="text-align: right; float: right;">
+	<a href="https://web.archive.org/web/20090608164423/http://www.sbin.org/">www.sbin.org</a>
+	</p>
+
+Go to the <a href="index.html">table of contents</a>.
+<p></p><hr><p>
+
+
+</p><h1><a name="SEC47" href="index.html#TOC47">3. Terminal I/O</a></h1>
+
+
+
+<h2><a name="SEC48" href="index.html#TOC48">3.1 How can I make my program not echo input?</a></h2>
+
+
+<blockquote>
+<p>
+How can I make my program not echo input, like login does when asking for
+your password?
+</p></blockquote>
+
+<p>
+There is an easy way, and a slightly harder way:
+
+</p>
+<p>
+The easy way, is to use <code>getpass()</code>, which is probably found on
+almost all Unices. It takes a string to use as a prompt. It will read up
+to an <code>EOF</code> or newline and returns a pointer to a static area of
+memory holding the string typed in.
+
+</p>
+<p>
+The harder way is to use <code>tcgetattr()</code> and <code>tcsetattr()</code>, both
+use a <code>struct termios</code> to manipulate the terminal. The following
+two routines should allow echoing, and non-echoing mode.
+
+</p>
+
+<pre>#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+#include &lt;termios.h&gt;
+#include &lt;string.h&gt;
+
+static struct termios stored_settings;
+
+void echo_off(void)
+{
+    struct termios new_settings;
+    tcgetattr(0,&amp;stored_settings);
+    new_settings = stored_settings;
+    new_settings.c_lflag &amp;= (~ECHO);
+    tcsetattr(0,TCSANOW,&amp;new_settings);
+    return;
+}
+
+void echo_on(void)
+{
+    tcsetattr(0,TCSANOW,&amp;stored_settings);
+    return;
+}
+</pre>
+
+<p>
+Both routines used, are defined by the POSIX standard.
+
+</p>
+
+
+<h2><a name="SEC49" href="index.html#TOC49">3.2 How can I read single characters from the terminal?</a></h2>
+
+
+<blockquote>
+<p>
+How can I read single characters from the terminal? My program is always
+waiting for the user to press <kbd><kbd>RETURN</kbd></kbd>.
+</p></blockquote>
+
+<p>
+Terminals are usually in canonical mode, where input is read in lines
+after it is edited. You may set this into non-canonical mode, where you
+set how many characters should be read before input is given to your
+program. You also may set the timer in non-canonical mode terminals to
+0, this timer flushs your buffer at set intervals. By doing this, you
+can use <code>getc()</code> to grab the key pressed immediately by the
+user. We use <code>tcgetattr()</code> and <code>tcsetattr()</code> both of which are
+defined by POSIX to manipulate the <code>termios</code> structure.
+
+</p>
+
+<pre>#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+#include &lt;termios.h&gt;
+#include &lt;string.h&gt;
+
+static struct termios stored_settings;
+
+void set_keypress(void)
+{
+    struct termios new_settings;
+
+    tcgetattr(0,&amp;stored_settings);
+
+    new_settings = stored_settings;
+
+    /* Disable canonical mode, and set buffer size to 1 byte */
+    new_settings.c_lflag &amp;= (~ICANON);
+    new_settings.c_cc[VTIME] = 0;
+    new_settings.c_cc[VMIN] = 1;
+
+    tcsetattr(0,TCSANOW,&amp;new_settings);
+    return;
+}
+
+void reset_keypress(void)
+{
+    tcsetattr(0,TCSANOW,&amp;stored_settings);
+    return;
+}
+</pre>
+
+
+
+<h2><a name="SEC50" href="index.html#TOC50">3.3 How can I check and see if a key was pressed?</a></h2>
+
+
+<blockquote>
+<p>
+How can I check and see if a key was pressed? On DOS I use the
+<code>kbhit()</code> function, but there doesn't seem to be an equivalent?
+</p></blockquote>
+
+<p>
+If you set the terminal to single-character mode (see previous answer),
+then (on most systems) you can use <code>select()</code> or <code>poll()</code> to
+test for readability.
+
+</p>
+
+
+<h2><a name="SEC51" href="index.html#TOC51">3.4 How can I move the cursor around the screen?</a></h2>
+
+
+<blockquote>
+<p>
+How can I move the cursor around the screen? I want to do full screen
+editing without using curses.
+</p></blockquote>
+
+<p>
+Seriously, you probably <strong>don't</strong> want to do this. Curses knows
+about how to handle all sorts of oddities that different terminal types
+exhibit; while the termcap/terminfo data will tell you whether any given
+terminal type possesses any of these oddities, you will probably find
+that correctly handling all the combinations is a <strong>huge</strong> job.
+
+</p>
+<p>
+However, if you insist on getting your hands dirty (so to speak), look
+into the <code>termcap</code> functions, particularly <code>tputs()</code>,
+<code>tparm()</code> and <code>tgoto()</code>.
+
+</p>
+
+
+<h2><a name="SEC52" href="index.html#TOC52">3.5 What are pttys?</a></h2>
+
+<p>
+Pseudo-teletypes (pttys, ptys, other variant abbreviations) are
+pseudo-devices that have two parts: the <strong>master</strong> side, which can be
+thought of as the `user', and the <strong>slave</strong> side, which behaves like a
+standard tty device.
+
+</p>
+<p>
+They exist in order to provide a means to emulate the behaviour of a
+serial terminal under the control of a program. For example,
+<code>telnet</code> uses a pseudo-terminal on the remote system; the remote
+login shell sees the behaviour it expects from a tty device, but the
+master side of the pseudo-terminal is being controlled by a daemon that
+forwards all data over the network. They are also used by programs such
+as <code>xterm</code>, <code>expect</code>, <code>script</code>, <code>screen</code>,
+<code>emacs</code>, and many others.
+
+</p>
+
+
+<h2><a name="SEC53" href="index.html#TOC53">3.6 How to handle a serial port or modem?</a></h2>
+
+<p>
+The handling of serial devices under Unix is heavily influenced by the
+traditional use of serial terminals. Historically, various combinations
+of ioctls and other hacks were necessary to control the precise behaviour
+of a serial device, but fortunately this is one of the areas that POSIX
+made some efforts to standardise.
+
+</p>
+<p>
+If you're using a system that doesn't understand <code>&lt;termios.h&gt;</code>,
+<code>tcsetattr()</code> and related functions, then you'll have to go
+elsewhere for information (or upgrade your system to something less
+archaeological).
+
+</p>
+<p>
+There are still significant differences between systems, however, mainly
+in the area of device names, handling of hardware flow control, and
+modem signalling. (Whenever possible, leave the device driver to do all
+the handshaking work, and don't attempt to manipulate handshaking
+signals directly.)
+
+</p>
+<p>
+The basic steps for opening and initialising a serial device are:
+
+</p>
+
+<ul>
+<li>
+
+<code>open()</code> the device; this may require the use of certain flags:
+
+<dl>
+
+<dt><code>O_NONBLOCK</code>
+</dt><dd>
+Opening a dial-in or modem-controlled device will block until carrier is
+present, unless this flag is used. A nonblocking open gives you the
+opportunity to disable the modem controls (see CLOCAL below) if
+necessary.
+
+</dd><dt><code>O_NOCTTY</code>
+</dt><dd>
+On 4.4BSD-derived systems this is redundant, but on other systems it
+controls whether the serial device can become a control terminal for the
+session. In most cases you probably <em>don't</em> want to acquire a
+control terminal, and should therefore specify this flag, but there are
+exceptions.
+</dd></dl>
+
+</li><li>
+
+Use <code>tcgetattr()</code> to retrieve the current device modes. While one
+will often ignore most or all of the initial settings thus obtained, it's
+still a convenient way of initialising a <code>struct termios</code>.
+
+</li><li>
+
+Set suitable values for <code>c_iflag</code>, <code>c_oflag</code>, <code>c_cflag</code>,
+<code>c_lflag</code>, and <code>c_cc</code> in the termios structure. (See below.)
+
+</li><li>
+
+Use <code>cfsetispeed()</code> and <code>cfsetospeed()</code> to set the desired
+baud rate. Very few systems allow you to set differing input and output
+speeds, so as a general rule you should set both to your desired speed.
+
+</li><li>
+
+Use <code>tcsetattr()</code> to set the device modes.
+
+</li><li>
+
+You may wish, if you used <code>O_NONBLOCK</code> when opening the port, to
+use <code>fcntl()</code> to ensure that <code>O_NONBLOCK</code> is turned off again.
+Systems seem to differ as to whether a nonblocking open on a tty will
+affect subsequent <code>read()</code> calls; better to be explicit.
+</li></ul>
+
+<p>
+Once you have opened and set up the port, you can then use <code>read()</code>
+and <code>write()</code> normally. Note that the behaviour of <code>read()</code> will
+be controlled by the flag settings you gave to <code>tcsetattr()</code>.
+
+</p>
+<p>
+<code>tcflush()</code>, <code>tcdrain()</code>, <code>tcsendbreak()</code> and
+<code>tcflow()</code> are additional useful functions that you should be aware
+of.
+
+</p>
+<p>
+When you're done with the port, and want to close it, be aware of a very
+nasty little hazard on some systems; if there's any pending output waiting
+to be written to the device (e.g. if output flow is stopped by hardware
+or software handshaking), your process can hang <strong>unkillably</strong> in the
+<code>close()</code> call until the output drains. Calling <code>tcflush()</code> to
+discard any pending output is probably a wise move.
+
+</p>
+<p>
+(Blocked output on tty devices is by far the most common cause of
+"unkillable" processes in my experience.)
+
+</p>
+
+
+<h3><a name="SEC54" href="index.html#TOC54">3.6.1 Serial device names and types</a></h3>
+
+<p>
+The device names used for serial port devices vary quite widely between
+systems. Some examples from different systems are:
+
+</p>
+
+<ul>
+<li>
+
+<tt>`/dev/tty[0-9][a-z]'</tt> for direct access devices, and
+<tt>`/dev/tty[0-9][A-Z]'</tt> for modem control devices (e.g. SCO Unix)
+
+</li><li>
+
+<tt>`/dev/cua[0-9]p[0-9]'</tt> for direct access devices,
+<tt>`/dev/cul[0-9]p[0-9]'</tt> for dial-out devices and
+<tt>`/dev/ttyd[0-9]p[0-9]'</tt> for dial-in devices
+(e.g. HP-UX)
+
+</li><li>
+
+<tt>`/dev/cua[a-z][0-9]'</tt> for dial-out devices and
+<tt>`/dev/tty[a-z][0-9]'</tt> for dial-in devices (e.g. FreeBSD)
+</li></ul>
+
+<p>
+The precise interaction between the device name used, and the effect on
+any hardware handshake lines is system-, configuration- and
+hardware-dependant, but will usually follow approximately these rules
+(assuming that the hardware is RS-232 DTE):
+
+</p>
+
+<ul>
+<li>
+
+A successful open of any device should assert DTR and RTS
+
+</li><li>
+
+A blocking open of a modem-control or dial-in device will wait for
+DCD (and possibly also DSR and/or CTS) to be raised, usually after
+asserting DTR/RTS.
+
+</li><li>
+
+An open of a dial-out device while an open call to the corresponding
+dial-in device is blocked waiting for carrier <em>may or may not</em>
+cause the open of the dial-in port to complete. Some systems implement a
+simple sharing scheme for dial-in and dial-out ports whereby the dial-in
+port is effectively "put to sleep" while the dial-out port is in use;
+other systems do not do this, and sharing the port between dial-in and
+dial-out on such systems requires external cooperation (e.g. use of UUCP
+lockfiles) to avoid contention problems.
+</li></ul>
+
+
+
+<h3><a name="SEC55" href="index.html#TOC55">3.6.2 Setting up termios flags</a></h3>
+
+<p>
+Some hints on setting up the termios flags when using a serial device
+that you've opened yourself (as opposed to using your existing control
+tty):
+
+</p>
+
+
+<h4><a name="SEC56" href="index.html#TOC56">3.6.2.1 c_iflag</a></h4>
+
+<p>
+You probably want to set <strong>all</strong> the bits in <code>c_iflag</code> to 0,
+unless you want to use software flow control (ick) in which case you set
+<code>IXON</code> and <code>IXOFF</code>.
+
+</p>
+
+
+<h4><a name="SEC57" href="index.html#TOC57">3.6.2.2 c_oflag</a></h4>
+
+<p>
+Most of the bits of <code>c_oflag</code> are hacks of one sort or another to
+make output to slow terminals work, and as such some newer systems have
+dropped almost all of them as obsolete (especially all the gory
+output-padding options). As with <code>c_iflag</code>, setting everything to 0
+is reasonable for most applications.
+
+</p>
+
+
+<h4><a name="SEC58" href="index.html#TOC58">3.6.2.3 c_cflag</a></h4>
+
+<p>
+When setting the character size, remember to mask using <code>CSIZE</code>
+first; e.g. to set 8-bit characters, use:
+
+</p><pre>    attr.c_cflag &amp;= ~CSIZE;
+    attr.c_cflag |= CS8;
+</pre>
+
+<p>
+Other important flags found in <code>c_cflag</code> that you probably want to
+turn <strong>on</strong> and <code>CREAD</code> and <code>HUPCL</code>.
+
+</p>
+<p>
+If you need to generate even parity, then set <code>PARENB</code> and clear
+<code>PARODD</code>; if you need to generate odd parity then set both
+<code>PARENB</code> and <code>PARODD</code>. If you don't want parity at all, then
+make sure <code>PARENB</code> is clear.
+
+</p>
+<p>
+Clear <code>CSTOPB</code> unless you actually need to generate two stop bits.
+
+</p>
+<p>
+Flags for enabling hardware flow control may also be found in
+<code>c_cflag</code>, but they aren't standardised (pity).
+
+</p>
+
+
+<h4><a name="SEC59" href="index.html#TOC59">3.6.2.4 c_lflag</a></h4>
+
+<p>
+Most applications will probably want to turn off <code>ICANON</code>
+(canonical, i.e. line-based, input processing), <code>ECHO</code>, and
+<code>ISIG</code>.
+
+</p>
+<p>
+<code>IEXTEN</code> is a more complex issue. If you don't turn it off, the
+implementation is allowed to do nonstandard things (like define
+additional control characters in <code>c_cc</code>) that might cause
+unexpected results, but you might need to leave <code>IEXTEN</code> enabled
+on some systems to get useful features like hardware flow control.
+
+</p>
+
+
+<h4><a name="SEC60" href="index.html#TOC60">3.6.2.5 c_cc</a></h4>
+
+<p>
+This is an array of characters that have special meanings on input.
+These characters are given names like <code>VINTR</code>, <code>VSTOP</code> etc.;
+the names are indexes into the array.
+
+</p>
+<p>
+(Two of these "characters" are not really characters at all, but control
+the behaviour of <code>read()</code> when <code>ICANON</code> is disabled; these are
+<code>VMIN</code> and <code>VTIME</code>.)
+
+</p>
+<p>
+The indexes are often referred to as though they were actual variables,
+e.g. "set VMIN to 1" actually means "set c_cc[VMIN] to 1". The shorthand
+is useful and only occasionally confusing.
+
+</p>
+<p>
+Many of the slots in <code>c_cc</code> are only used if some other combination
+of flags is set:
+
+</p>
+<dl>
+
+<dt>Used only if <code>ICANON</code> is set
+</dt><dd>
+<code>VEOF</code>, <code>VEOL</code>, <code>VERASE</code>, <code>VKILL</code> (and also
+<code>VEOL2</code>, <code>VSTATUS</code> and <code>VWERASE</code> if defined and
+<code>IEXTEN</code> is set)
+
+</dd><dt>Used only if <code>ISIG</code> is set
+</dt><dd>
+<code>VINTR</code>, <code>VQUIT</code>, <code>VSUSP</code> (and also <code>VDSUSP</code> if
+defined and <code>IEXTEN</code> is set)
+
+</dd><dt>Used only if <code>IXON</code> or <code>IXOFF</code> is set
+</dt><dd>
+<code>VSTOP</code>, <code>VSTART</code>
+
+</dd><dt>Used only if <code>ICANON</code> is <strong>not</strong> set
+</dt><dd>
+<code>VMIN</code>, <code>VTIME</code>
+</dd></dl>
+
+<p>
+Implementations may define additional entries in <code>c_cc</code>. It may
+be prudent to initialise all the entries to <code>_POSIX_VDISABLE</code>
+(the constant <code>NCCS</code> gives the array size) before setting the
+specific values you wish to use.
+
+</p>
+<p>
+<code>VMIN</code> and <code>VTIME</code> (which may share slots with <code>VEOF</code> and
+<code>VEOL</code> respectively, depending on the implementation) have the
+following meaning. The value of <code>VTIME</code> is (if not 0) always
+interpreted as a timer in tenths of seconds.
+
+</p>
+<dl>
+
+<dt><code>c_cc[VMIN] &gt; 0, c_cc[VTIME] &gt; 0</code>
+</dt><dd>
+<code>read()</code> will return when either VMIN bytes of input are available,
+or if at least one character has been read and VTIME has expired between
+characters, or if interrupted by a signal.
+
+</dd><dt><code>c_cc[VMIN] &gt; 0, c_cc[VTIME] == 0</code>
+</dt><dd>
+<code>read()</code> will return when VMIN bytes of input are available, or if
+interrupted. Otherwise it will wait indefinitely.
+
+</dd><dt><code>c_cc[VMIN] == 0, c_cc[VTIME] &gt; 0</code>
+</dt><dd>
+<code>read()</code> will return as soon as any input is available; if VTIME
+expires with no data arriving, it will return with no characters read.
+(This conflicts slightly with the end-of-file indication received in
+the event of modem hangup; using 1 for VMIN and either <code>alarm()</code>
+or <code>select()</code> for a timeout avoids this particular problem.)
+
+</dd><dt><code>c_cc[VMIN] == 0, c_cc[VTIME] == 0</code>
+</dt><dd>
+<code>read()</code> will always return immediately; if no data is available
+it will return with no characters read (with the same problem as above).
+</dd></dl>
+
+<p></p><hr><p>
+Go to the <a href="index.html">table of contents</a>.
+
+
+
+</p></body>
+</html>

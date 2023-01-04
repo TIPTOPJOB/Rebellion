@@ -1,0 +1,210 @@
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script src="analytics.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app222.us.archive.org';v.server_ms=249;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="wombat.js" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("http://www.sbin.org:80/doc/unix-faq/programmer/faq_5.html","20090609072724","https://web.archive.org/","web","/_static/",
+	      "1244532444");
+</script>
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<!-- This HTML file has been created by texi2html 1.51
+     from faq.texi on 1 September 2000 -->
+
+<title>Unix Programming Frequently Asked Questions - 4. System Information</title>
+
+<link media="all" href="faq_5.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+	<p style="text-align: right; float: right;">
+	<a href="https://web.archive.org/web/20090609072724/http://www.sbin.org/">www.sbin.org</a>
+	</p>
+
+Go to the <a href="index.html">table of contents</a>.
+<p></p><hr><p>
+
+
+</p><h1><a name="SEC61" href="index.html#TOC61">4. System Information</a></h1>
+
+
+
+<h2><a name="SEC62" href="index.html#TOC62">4.1 How can I tell how much memory my system has?</a></h2>
+
+<p>
+This is another `Frequently Unanswered Question'. In most cases, you
+should not even <em>attempt</em> to find out.
+
+</p>
+<p>
+If you really must, then it can usually be done, but in a highly
+system-dependent fashion. For example, on Solaris, you can use
+<code>sysconf(_SC_PHYS_PAGES)</code> and <code>sysconf(_SC_PAGESIZE)</code>; on
+FreeBSD, you can use <code>sysctl()</code>; on Linux you can read and parse
+<tt>`/proc/meminfo'</tt> (being careful to allow any of the historically
+valid formats for this file); other systems may have their own methods.
+I'm not aware of any more portable methods.
+
+</p>
+<p>
+For HP-UX (9 and 10), the following code has been contributed:
+
+</p>
+
+<pre>struct pst_static pst;
+
+if (pstat_getstatic(&amp;pst, sizeof(pst), (size_t) 1, 0) != -1)
+{
+    printf(" Page Size: %lu\n", pst.page_size);
+    printf("Phys Pages: %lu\n", pst.physical_memory);
+}
+</pre>
+
+
+
+<h2><a name="SEC63" href="index.html#TOC63">4.2 How do I check a user's password?</a></h2>
+
+
+
+<h3><a name="SEC64" href="index.html#TOC64">4.2.1 How do I get a user's password?</a></h3>
+
+<p>
+Traditionally user passwords were kept in the <tt>`/etc/passwd'</tt> file,
+on most UNIX flavours. Which is usually of this format:
+
+</p>
+<p>
+username:password:uid:gid:gecos field:home directory:login shell
+
+</p>
+<p>
+Though this has changed with time, now user information may be kept on
+other hosts, or not necessarily in the <tt>`/etc/passwd'</tt> file.  Modern
+implementations also made use of `shadow' password files which hold the
+password, along with sensitive information.  This file would be readable
+only by privileged users.
+
+</p>
+<p>
+The password is usually not in clear text, but encrypted due to security
+concerns.
+
+</p>
+<p>
+POSIX defines a suite of routines which can be used to access this
+database for queries. The quickest way to get an individual record for a
+user is with the <code>getpwnam()</code> and <code>getpwuid()</code> routines. Both
+return a pointer to a struct passwd, which holds the users information
+in various members. <code>getpwnam()</code> accepts a string holding the
+user's name, <code>getpwuid()</code> accepts a uid (type <code>uid_t</code> as
+defined by POSIX). Both return NULL if they fail.
+
+</p>
+<p>
+However, as explained earlier, a shadow database exists on most modern
+systems to hold sensitive information, namely the password. Some systems
+only return the password if the calling uid is of the superuser, others
+require you to use another suite of functions for the shadow password
+database. If this is the case you need to make use of <code>getspnam()</code>,
+which accepts a username and returns a struct spwd. Again, in order to
+successfully do this, you will need to have privileges. (On some systems,
+notably HP-UX and SCO, you may need to use <code>getprpwnam()</code> instead.)
+
+</p>
+
+
+<h3><a name="SEC65" href="index.html#TOC65">4.2.2 How do I get shadow passwords by uid?</a></h3>
+
+
+<blockquote>
+<p>
+My system uses the getsp* suite of routines to get the sensitive user
+information. However I do not have <code>getspuid()</code>, only
+<code>getspnam()</code>. How do I work around this, and get by uid?
+</p></blockquote>
+
+<p>
+The work around is relatively painless. The following routine should go
+straight into your personal utility library:
+
+</p>
+
+<pre>#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+#include &lt;pwd.h&gt;
+#include &lt;shadow.h&gt;
+
+struct spwd *getspuid(uid_t pw_uid)
+{
+  struct spwd *shadow;
+  struct passwd *ppasswd;
+
+  if( ((ppasswd = getpwuid(pw_uid)) == NULL) 
+      || ((shadow = getspnam(ppasswd-&gt;pw_name)) == NULL))
+    return NULL;
+  
+  return shadow;
+}
+</pre>
+
+<p>
+The problem is, that some systems do not keep the uid, or other
+information in the shadow database.
+
+</p>
+
+
+<h3><a name="SEC66" href="index.html#TOC66">4.2.3 How do I verify a user's password?</a></h3>
+
+<p>
+The fundamental problem here is, that various authentication systems
+exist, and passwords aren't always what they seem. Also with the
+traditional one way encryption method used by most UNIX flavours (out of
+the box), the encryption algorithm may differ, some systems use a one
+way DES encryption, others like the international release of FreeBSD use
+MD5.
+
+</p>
+<p>
+The most popular way is to have a one way encryption algorithm, where
+the password cannot be decrypted. Instead the password is taken in clear
+text from input, and encrypted and checked against the encrypted
+password in the database. The details of how to encrypt should really
+come from your man page for <code>crypt()</code>, but here's a usual version:
+
+</p>
+
+<pre>/* given a plaintext password and an encrypted password, check if
+ * they match; returns 1 if they match, 0 otherwise.
+ */
+
+int check_pass(const char *plainpw, const char *cryptpw)
+{
+    return strcmp(crypt(plainpw,cryptpw), cryptpw) == 0;
+}
+</pre>
+
+<p>
+This works because the salt used in encrypting the password is stored as
+an initial substring of the encrypted value.
+
+</p>
+<p>
+<em>WARNING:</em> on some systems, password encryption is actually done
+with a variant of crypt called <code>bigcrypt()</code>.
+
+</p>
+<p></p><hr><p>
+Go to the <a href="index.html">table of contents</a>.
+
+
+
+</p></body>
+</html>

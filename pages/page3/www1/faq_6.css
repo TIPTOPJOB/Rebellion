@@ -1,0 +1,204 @@
+/* ::::: https://web.archive.org/_static/css/banner-styles.css?v=S1zqJCYt ::::: */
+
+/* ::::: https://web.archive.org/_static/css/record.css ::::: */
+
+#wm-ipp-base { height: 65px; padding: 0px; margin: 0px; border: medium none; background: transparent none repeat scroll 0% 0%; }
+#wm-ipp { z-index: 2147483647; }
+#wm-ipp, #wm-ipp * { font-family: Lucida Grande,Helvetica,Arial,sans-serif; font-size: 12px; line-height: 1.2; letter-spacing: 0px; width: auto; height: auto; max-width: none; max-height: none; min-width: 0px !important; min-height: 0px; outline: medium none; float: none; text-align: left; border: medium none; color: rgb(0, 0, 0); text-indent: 0px; position: initial; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; }
+#wm-ipp div, #wm-ipp canvas { display: block; }
+#wm-ipp div, #wm-ipp tr, #wm-ipp td, #wm-ipp a, #wm-ipp form { padding: 0px; margin: 0px; border: medium none; border-radius: 0px; background-color: transparent; background-image: none; height: auto; }
+#wm-ipp table { border: medium none; border-collapse: collapse; margin: 0px; padding: 0px; width: auto; font-size: inherit; }
+#wm-ipp form input { padding: 1px !important; height: auto; display: inline; margin: 0px; color: rgb(0, 0, 0); background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 1px solid rgb(102, 102, 102); }
+#wm-ipp form input[type="submit"] { padding: 0px 8px !important; margin: 1px 0px 1px 5px !important; width: auto !important; border: 1px solid rgb(0, 0, 0) !important; background: rgb(255, 255, 255) none repeat scroll 0% 0% !important; color: rgb(0, 0, 0) !important; }
+#wm-ipp form input[type="submit"]:hover { background: rgb(238, 238, 238) none repeat scroll 0% 0% !important; cursor: pointer !important; }
+#wm-ipp form input[type="submit"]:active { transform: translateY(1px); }
+#wm-ipp a { display: inline; }
+#wm-ipp a:hover { text-decoration: underline; }
+#wm-ipp a.wm-btn:hover { text-decoration: none; color: rgb(255, 255, 0) !important; }
+#wm-ipp a.wm-btn:hover span { color: rgb(255, 255, 0) !important; }
+#wm-ipp #wm-ipp-inside { margin: 0px 6px; border-width: medium 5px 5px; border-style: none solid solid; border-color: currentcolor rgb(0, 0, 0) rgb(0, 0, 0); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; background-color: rgba(255, 255, 255, 0.9); box-shadow: 1px 1px 4px rgb(51, 51, 51); border-radius: 0px 0px 8px 8px; }
+#wm-ipp #wm-logo { padding: 0px 10px; vertical-align: middle; min-width: 100px; flex: 0 0 100px; }
+#wm-ipp .c { padding-left: 4px; }
+#wm-ipp .c .u { margin-top: 4px !important; }
+#wm-ipp .n { padding: 0px 0px 0px 5px !important; vertical-align: bottom; }
+#wm-ipp .n a { text-decoration: none; color: rgb(51, 51, 255); font-weight: bold; }
+#wm-ipp .n .b { padding: 0px 6px 0px 0px !important; text-align: right !important; overflow: visible; white-space: nowrap; color: rgb(153, 153, 170); vertical-align: middle; }
+#wm-ipp .n .y .b { padding: 0px 6px 2px 0px !important; }
+#wm-ipp .n .c { background: rgb(0, 0, 0) none repeat scroll 0% 0%; color: rgb(255, 255, 0); font-weight: bold; padding: 0px !important; text-align: center; }
+#wm-ipp .n td.f { padding: 0px 0px 0px 6px !important; text-align: left !important; overflow: visible; white-space: nowrap; color: rgb(153, 153, 170); vertical-align: middle; }
+#wm-ipp .n tr.m td { text-transform: uppercase; white-space: nowrap; padding: 2px 0px; }
+#wm-ipp .c .s { padding: 0px 5px 0px 0px !important; vertical-align: bottom; }
+#wm-ipp #wm-nav-captures { white-space: nowrap; }
+#wm-ipp .c .s a.t { color: rgb(51, 51, 255); font-weight: bold; line-height: 1.8; }
+#wm-ipp .c .s div.r { color: rgb(102, 102, 102); font-size: 9px; white-space: nowrap; }
+#wm-ipp .c .k { padding-bottom: 1px; }
+#wm-ipp .c .s { padding: 0px 5px 2px 0px !important; }
+#wm-ipp td#displayMonthEl { padding: 2px 0px !important; }
+#wm-ipp td#displayYearEl { padding: 0px 0px 2px !important; }
+div#wm-ipp-sparkline { position: relative; white-space: nowrap; background-color: rgb(255, 255, 255); cursor: pointer; line-height: 0.9; }
+#sparklineImgId, #wm-sparkline-canvas { position: relative; z-index: 9012; max-width: none; }
+#wm-ipp-sparkline div.yt { position: absolute; z-index: 9010 !important; background-color: rgb(255, 255, 0) !important; top: 0px; }
+#wm-ipp-sparkline div.mt { position: absolute; z-index: 9013 !important; background-color: rgb(236, 0, 140) !important; top: 0px; }
+#wm-ipp .r { margin-left: 4px; }
+#wm-ipp .r a { color: rgb(51, 51, 255); border: medium none; position: relative; background-color: transparent; background-repeat: no-repeat !important; background-position: 100% 100% !important; text-decoration: none; }
+#wm-ipp #wm-capinfo { border-radius: 0px 0px 4px 4px; }
+#wm-ipp #wm-capinfo .c-logo { display: block; float: left; margin-right: 3px; width: 90px; min-height: 90px; max-height: 290px; border-radius: 45px; overflow: hidden; background-position: 50% center; background-size: auto 90px; box-shadow: 0px 0px 2px 2px rgb(208, 208, 208) inset; }
+#wm-ipp #wm-capinfo .wm-title { font-size: 130%; }
+#wm-ipp #wm-expand { right: 1px; bottom: -1px; color: rgb(255, 255, 255); background-color: rgb(102, 102, 102) !important; padding: 0px 5px 0px 3px !important; border-radius: 3px 3px 0px 0px !important; }
+#wm-ipp #wm-expand span { color: rgb(255, 255, 255); }
+#wm-ipp #wm-expand #wm-expand-icon { display: inline-block; transition: transform 0.5s ease 0s; transform-origin: 50% 45% 0px; }
+#wm-ipp #wmtb { text-align: right; }
+#wm-ipp #wmtb #wmtbURL { width: calc(100% - 45px); }
+#wm-ipp #wm-graph-anchor { border-right: 1px solid rgb(204, 204, 204); }
+#wm-ipp-print { display: none !important; }
+@media print {
+  #wm-ipp-base { display: none !important; }
+  #wm-ipp-print { display: block !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+@media (max-width: 414px) {
+  #wm-ipp .xxs { display: none !important; }
+}
+@media (min-width: 1055px) {
+  #wm-ipp #wm-graph-anchor { display: block !important; }
+}
+@media (max-width: 1054px) {
+  #wm-ipp #wm-graph-anchor { display: none !important; }
+}
+@media (max-width: 1163px) {
+  #wm-logo { display: none !important; }
+}
+#wm-btns { white-space: nowrap; margin-top: -2px; }
+#wm-btns #wm-save-snapshot-open { margin-right: 7px; top: -6px; }
+#wm-btns #wm-sign-in { box-sizing: content-box; display: none; margin-right: 7px; top: -8px; border: 2px solid rgb(0, 0, 0); border-radius: 14px; padding-right: 2px; padding-bottom: 2px; width: 11px; height: 11px; }
+#wm-btns #wm-sign-in > .iconochive-person { font-size: 12.5px; }
+#wm-save-snapshot-open > .iconochive-web { color: rgb(0, 0, 0); font-size: 160%; }
+#wm-ipp #wm-share { display: flex; align-items: flex-end; justify-content: space-between; }
+#wm-share > #wm-screenshot { display: inline-block; margin-right: 3px; visibility: hidden; }
+#wm-share > #wm-video { display: inline-block; margin-right: 3px; visibility: hidden; }
+#wm-video > .iconochive-movies { color: rgb(0, 0, 0); display: inline-block; font-size: 150%; margin-bottom: 2px; }
+#wm-btns #wm-save-snapshot-in-progress { display: none; font-size: 160%; opacity: 0.5; position: relative; margin-right: 7px; top: -5px; }
+#wm-btns #wm-save-snapshot-success { display: none; color: green; position: relative; top: -7px; }
+#wm-btns #wm-save-snapshot-fail { display: none; color: red; position: relative; top: -7px; }
+.wm-icon-screen-shot { background: rgba(0, 0, 0, 0) url('web-screenshot.svg') no-repeat scroll 0% 0% / contain  !important; width: 22px !important; height: 19px !important; display: inline-block; }
+#donato { height: 0px; margin: 0px; padding: 0px; border-bottom: 1px solid rgb(153, 153, 153) !important; }
+#donato #donato-base { width: 100%; height: 100%; margin: 0px; padding: 0px; position: absolute; z-index: 2147483639; }
+/* ::::: https://web.archive.org/_static/css/iconochive.css?v=qtvMKcIJ ::::: */
+
+@font-face {
+  font-family: "Iconochive-Regular";  font-style: normal;  font-weight: normal;  src: url('iconochive-regular.eot') format("embedded-opentype"), url('iconochive-regular.woff') format("woff"), url('iconochive-regular.ttf') format("truetype"), url('iconochive-regular.svg') format("svg");}
+[class^="iconochive-"], [class*=" iconochive-"] { font-family: "Iconochive-Regular" !important; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; }
+.iconochive-Uplevel::before { content: "↵"; }
+.iconochive-exit::before { content: "🚣"; }
+.iconochive-beta::before { content: "β"; }
+.iconochive-logo::before { content: "🏛"; }
+.iconochive-audio::before { content: "🕨"; }
+.iconochive-movies::before { content: "🎞"; }
+.iconochive-software::before { content: "💾"; }
+.iconochive-texts::before { content: "🕮"; }
+.iconochive-etree::before { content: "🎤"; }
+.iconochive-image::before { content: "🖼"; }
+.iconochive-web::before { content: "🗔"; }
+.iconochive-collection::before { content: "∑"; }
+.iconochive-folder::before { content: "📂"; }
+.iconochive-data::before { content: "🗃"; }
+.iconochive-tv::before { content: "📺"; }
+.iconochive-article::before { content: "🗏"; }
+.iconochive-question::before { content: "⍰"; }
+.iconochive-question-dark::before { content: "?"; }
+.iconochive-info::before { content: "i"; }
+.iconochive-info-small::before { content: "ⓘ"; }
+.iconochive-comment::before { content: "🗩"; }
+.iconochive-comments::before { content: "🗪"; }
+.iconochive-person::before { content: "👤"; }
+.iconochive-people::before { content: "👥"; }
+.iconochive-eye::before { content: "👁"; }
+.iconochive-rss::before { content: "∞"; }
+.iconochive-time::before { content: "🕑"; }
+.iconochive-quote::before { content: "❝"; }
+.iconochive-disc::before { content: "💿"; }
+.iconochive-tv-commercial::before { content: "💰"; }
+.iconochive-search::before { content: "🔍"; }
+.iconochive-search-star::before { content: "✽"; }
+.iconochive-tiles::before { content: "⊞"; }
+.iconochive-list::before { content: "⇶"; }
+.iconochive-list-bulleted::before { content: "⌗"; }
+.iconochive-latest::before { content: "∈"; }
+.iconochive-left::before { content: "˂"; }
+.iconochive-right::before { content: "˃"; }
+.iconochive-left-solid::before { content: "◂"; }
+.iconochive-right-solid::before { content: "▸"; }
+.iconochive-up-solid::before { content: "▴"; }
+.iconochive-down-solid::before { content: "▾"; }
+.iconochive-dot::before { content: "⏤"; }
+.iconochive-dots::before { content: "▦"; }
+.iconochive-columns::before { content: "▯"; }
+.iconochive-sort::before { content: "⇕"; }
+.iconochive-atoz::before { content: "🔤"; }
+.iconochive-ztoa::before { content: "🔥"; }
+.iconochive-upload::before { content: "📤"; }
+.iconochive-download::before { content: "📥"; }
+.iconochive-favorite::before { content: "★"; }
+.iconochive-heart::before { content: "♥"; }
+.iconochive-play::before { content: "▶"; }
+.iconochive-play-framed::before { content: "🎬"; }
+.iconochive-fullscreen::before { content: "⛶"; }
+.iconochive-mute::before { content: "🔇"; }
+.iconochive-unmute::before { content: "🔊"; }
+.iconochive-share::before { content: "🎁"; }
+.iconochive-edit::before { content: "✎"; }
+.iconochive-reedit::before { content: "✐"; }
+.iconochive-gear::before { content: "⚙"; }
+.iconochive-remove-circle::before { content: "❎"; }
+.iconochive-plus-circle::before { content: "🗖"; }
+.iconochive-minus-circle::before { content: "🗕"; }
+.iconochive-x::before { content: "🗙"; }
+.iconochive-fork::before { content: "⋔"; }
+.iconochive-trash::before { content: "🗑"; }
+.iconochive-warning::before { content: "⚠"; }
+.iconochive-flash::before { content: "🗲"; }
+.iconochive-world::before { content: "🗺"; }
+.iconochive-lock::before { content: "🔒"; }
+.iconochive-unlock::before { content: "🔓"; }
+.iconochive-twitter::before { content: "🐦"; }
+.iconochive-facebook::before { content: "f"; }
+.iconochive-googleplus::before { content: "g"; }
+.iconochive-reddit::before { content: "👽"; }
+.iconochive-tumblr::before { content: "T"; }
+.iconochive-pinterest::before { content: "𝓟"; }
+.iconochive-popcorn::before { content: "💥"; }
+.iconochive-email::before { content: "📧"; }
+.iconochive-embed::before { content: "🔗"; }
+.iconochive-gamepad::before { content: "🕹"; }
+.iconochive-Zoom_In::before { content: "+"; }
+.iconochive-Zoom_Out::before { content: "-"; }
+.iconochive-RSS::before { content: "📨"; }
+.iconochive-Light_Bulb::before { content: "💡"; }
+.iconochive-Add::before { content: "⊕"; }
+.iconochive-Tab_Activity::before { content: "⌘"; }
+.iconochive-Forward::before { content: "⏩"; }
+.iconochive-Backward::before { content: "⏪"; }
+.iconochive-No_Audio::before { content: "🔈"; }
+.iconochive-Pause::before { content: "⏸"; }
+.iconochive-No_Favorite::before { content: "☆"; }
+.iconochive-Unike::before { content: "♡"; }
+.iconochive-Song::before { content: "♫"; }
+.iconochive-No_Flag::before { content: "⚐"; }
+.iconochive-Flag::before { content: "⚑"; }
+.iconochive-Done::before { content: "✓"; }
+.iconochive-Check::before { content: "✔"; }
+.iconochive-Refresh::before { content: "⟳"; }
+.iconochive-Headphones::before { content: "🎧"; }
+.iconochive-Chart::before { content: "📈"; }
+.iconochive-Bookmark::before { content: "📑"; }
+.iconochive-Documents::before { content: "📚"; }
+.iconochive-Newspaper::before { content: "📰"; }
+.iconochive-Podcast::before { content: "📶"; }
+.iconochive-Radio::before { content: "📻"; }
+.iconochive-Cassette::before { content: "📼"; }
+.iconochive-Shuffle::before { content: "🔀"; }
+.iconochive-Loop::before { content: "🔁"; }
+.iconochive-Low_Audio::before { content: "🔉"; }
+.iconochive-First::before { content: "🎖"; }
+.iconochive-Invisible::before { content: "🕶"; }
+.iconochive-Computer::before { content: "🖳"; }
+body { margin-top: 0px !important; padding-top: 0px !important; }

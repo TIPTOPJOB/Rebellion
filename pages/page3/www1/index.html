@@ -1,0 +1,172 @@
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script src="analytics.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app222.us.archive.org';v.server_ms=424;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="wombat.js" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("http://www.sbin.org:80/doc/unix-faq/programmer/index.html","20090607100000","https://web.archive.org/","web","/_static/",
+	      "1244368800");
+</script>
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<!-- This HTML file has been created by texi2html 1.51
+     from faq.texi on 1 September 2000 -->
+
+<title>Unix Programming Frequently Asked Questions - Table of Contents</title>
+
+<link media="all" href="index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+	<p style="text-align: right; float: right;">
+	<a href="https://web.archive.org/web/20090607100000/http://www.sbin.org/">www.sbin.org</a>
+	</p>
+
+<h1>Unix Programming Frequently Asked Questions</h1>
+<p>
+</p><p></p><hr><p>
+</p><ul>
+<li><a name="TOC1" href="faq_1.html#SEC1" indepth="true">About this FAQ</a>
+</li><li><a name="TOC2" href="faq_2.html#SEC2" indepth="true">1. Process Control</a>
+<ul>
+<li><a name="TOC3" href="faq_2.html#SEC3" indepth="true">1.1 Creating new processes: fork()</a>
+<ul>
+<li><a name="TOC4" href="faq_2.html#SEC4" indepth="true">1.1.1 What does fork() do?</a>
+</li><li><a name="TOC5" href="faq_2.html#SEC5" indepth="true">1.1.2 What's the difference between fork() and vfork()?</a>
+</li><li><a name="TOC6" href="faq_2.html#SEC6" indepth="true">1.1.3 Why use _exit rather than exit in the child branch of a fork?</a>
+</li></ul>
+</li><li><a name="TOC7" href="faq_2.html#SEC7" indepth="true">1.2 Environment variables</a>
+<ul>
+<li><a name="TOC8" href="faq_2.html#SEC8" indepth="true">1.2.1 How can I get/set an environment variable from a program?</a>
+</li><li><a name="TOC9" href="faq_2.html#SEC9" indepth="true">1.2.2 How can I read the whole environment?</a>
+</li></ul>
+</li><li><a name="TOC10" href="faq_2.html#SEC10" indepth="true">1.3 How can I sleep for less than a second?</a>
+</li><li><a name="TOC11" href="faq_2.html#SEC11" indepth="true">1.4 How can I get a finer-grained version of alarm()?</a>
+</li><li><a name="TOC12" href="faq_2.html#SEC12" indepth="true">1.5 How can a parent and child process communicate?</a>
+</li><li><a name="TOC13" href="faq_2.html#SEC13" indepth="true">1.6 How do I get rid of zombie processes?</a>
+<ul>
+<li><a name="TOC14" href="faq_2.html#SEC14" indepth="true">1.6.1 What is a zombie?</a>
+</li><li><a name="TOC15" href="faq_2.html#SEC15" indepth="true">1.6.2 How do I prevent them from occuring?</a>
+</li></ul>
+</li><li><a name="TOC16" href="faq_2.html#SEC16" indepth="true">1.7 How do I get my program to act like a daemon?</a>
+</li><li><a name="TOC17" href="faq_2.html#SEC17" indepth="true">1.8 How can I look at process in the system like ps does?</a>
+</li><li><a name="TOC18" href="faq_2.html#SEC18" indepth="true">1.9 Given a pid, how can I tell if it's a running program?</a>
+</li><li><a name="TOC19" href="faq_2.html#SEC19" indepth="true">1.10 What's the return value of system/pclose/waitpid?</a>
+</li><li><a name="TOC20" href="faq_2.html#SEC20" indepth="true">1.11 How do I find out about a process' memory usage?</a>
+</li><li><a name="TOC21" href="faq_2.html#SEC21" indepth="true">1.12 Why do processes never decrease in size?</a>
+</li><li><a name="TOC22" href="faq_2.html#SEC22" indepth="true">1.13 How do I change the name of my program (as seen by `ps')?</a>
+</li><li><a name="TOC23" href="faq_2.html#SEC23" indepth="true">1.14 How can I find a process' executable file?</a>
+<ul>
+<li><a name="TOC24" href="faq_2.html#SEC24" indepth="true">1.14.1 So where do I put my configuration files then?</a>
+</li></ul>
+</li><li><a name="TOC25" href="faq_2.html#SEC25" indepth="true">1.15 Why doesn't my process get SIGHUP when its parent dies?</a>
+</li><li><a name="TOC26" href="faq_2.html#SEC26" indepth="true">1.16 How can I kill all descendents of a process?</a>
+</li></ul>
+</li><li><a name="TOC27" href="faq_3.html#SEC27" indepth="true">2. General File handling (including pipes and sockets)</a>
+<ul>
+<li><a name="TOC28" href="faq_3.html#SEC28" indepth="true">2.1 How to manage multiple connections?</a>
+<ul>
+<li><a name="TOC29" href="faq_3.html#SEC29" indepth="true">2.1.1 How do I use select()?</a>
+</li><li><a name="TOC30" href="faq_3.html#SEC30" indepth="true">2.1.2 How do I use poll()?</a>
+</li><li><a name="TOC31" href="faq_3.html#SEC31" indepth="true">2.1.3 Can I use SysV IPC at the same time as select or poll?</a>
+</li></ul>
+</li><li><a name="TOC32" href="faq_3.html#SEC32" indepth="true">2.2 How can I tell when the other end of a connection shuts down?</a>
+</li><li><a name="TOC33" href="faq_3.html#SEC33" indepth="true">2.3 Best way to read directories?</a>
+</li><li><a name="TOC34" href="faq_3.html#SEC34" indepth="true">2.4 How can I find out if someone else has a file open?</a>
+</li><li><a name="TOC35" href="faq_3.html#SEC35" indepth="true">2.5 How do I `lock' a file?</a>
+</li><li><a name="TOC36" href="faq_3.html#SEC36" indepth="true">2.6 How do I find out if a file has been updated by another process?</a>
+</li><li><a name="TOC37" href="faq_3.html#SEC37" indepth="true">2.7 How does the `du' utility work?</a>
+</li><li><a name="TOC38" href="faq_3.html#SEC38" indepth="true">2.8 How do I find the size of a file?</a>
+</li><li><a name="TOC39" href="faq_3.html#SEC39" indepth="true">2.9 How do I expand `~' in a filename like the shell does?</a>
+</li><li><a name="TOC40" href="faq_3.html#SEC40" indepth="true">2.10 What can I do with named pipes (FIFOs)?</a>
+<ul>
+<li><a name="TOC41" href="faq_3.html#SEC41" indepth="true">2.10.1 What is a named pipe?</a>
+</li><li><a name="TOC42" href="faq_3.html#SEC42" indepth="true">2.10.2 How do I create a named pipe?</a>
+</li><li><a name="TOC43" href="faq_3.html#SEC43" indepth="true">2.10.3 How do I use a named pipe?</a>
+</li><li><a name="TOC44" href="faq_3.html#SEC44" indepth="true">2.10.4 Can I use a named pipe across NFS?</a>
+</li><li><a name="TOC45" href="faq_3.html#SEC45" indepth="true">2.10.5 Can multiple processes write to the pipe simultaneously?</a>
+</li><li><a name="TOC46" href="faq_3.html#SEC46" indepth="true">2.10.6 Using named pipes in applications</a>
+</li></ul>
+</li></ul>
+</li><li><a name="TOC47" href="faq_4.html#SEC47" indepth="true">3. Terminal I/O</a>
+<ul>
+<li><a name="TOC48" href="faq_4.html#SEC48" indepth="true">3.1 How can I make my program not echo input?</a>
+</li><li><a name="TOC49" href="faq_4.html#SEC49" indepth="true">3.2 How can I read single characters from the terminal?</a>
+</li><li><a name="TOC50" href="faq_4.html#SEC50" indepth="true">3.3 How can I check and see if a key was pressed?</a>
+</li><li><a name="TOC51" href="faq_4.html#SEC51" indepth="true">3.4 How can I move the cursor around the screen?</a>
+</li><li><a name="TOC52" href="faq_4.html#SEC52" indepth="true">3.5 What are pttys?</a>
+</li><li><a name="TOC53" href="faq_4.html#SEC53" indepth="true">3.6 How to handle a serial port or modem?</a>
+<ul>
+<li><a name="TOC54" href="faq_4.html#SEC54" indepth="true">3.6.1 Serial device names and types</a>
+</li><li><a name="TOC55" href="faq_4.html#SEC55" indepth="true">3.6.2 Setting up termios flags</a>
+<ul>
+<li><a name="TOC56" href="faq_4.html#SEC56" indepth="true">3.6.2.1 c_iflag</a>
+</li><li><a name="TOC57" href="faq_4.html#SEC57" indepth="true">3.6.2.2 c_oflag</a>
+</li><li><a name="TOC58" href="faq_4.html#SEC58" indepth="true">3.6.2.3 c_cflag</a>
+</li><li><a name="TOC59" href="faq_4.html#SEC59" indepth="true">3.6.2.4 c_lflag</a>
+</li><li><a name="TOC60" href="faq_4.html#SEC60" indepth="true">3.6.2.5 c_cc</a>
+</li></ul>
+</li></ul>
+</li></ul>
+</li><li><a name="TOC61" href="faq_5.html#SEC61" indepth="true">4. System Information</a>
+<ul>
+<li><a name="TOC62" href="faq_5.html#SEC62" indepth="true">4.1 How can I tell how much memory my system has?</a>
+</li><li><a name="TOC63" href="faq_5.html#SEC63" indepth="true">4.2 How do I check a user's password?</a>
+<ul>
+<li><a name="TOC64" href="faq_5.html#SEC64" indepth="true">4.2.1 How do I get a user's password?</a>
+</li><li><a name="TOC65" href="faq_5.html#SEC65" indepth="true">4.2.2 How do I get shadow passwords by uid?</a>
+</li><li><a name="TOC66" href="faq_5.html#SEC66" indepth="true">4.2.3 How do I verify a user's password?</a>
+</li></ul>
+</li></ul>
+</li><li><a name="TOC67" href="faq_6.html#SEC67" indepth="true">5. Miscellaneous programming</a>
+<ul>
+<li><a name="TOC68" href="faq_6.html#SEC68" indepth="true">5.1 How do I compare strings using wildcards?</a>
+<ul>
+<li><a name="TOC69" href="faq_6.html#SEC69" indepth="true">5.1.1 How do I compare strings using filename patterns?</a>
+</li><li><a name="TOC70" href="faq_6.html#SEC70" indepth="true">5.1.2 How do I compare strings using regular expressions?</a>
+</li></ul>
+</li><li><a name="TOC71" href="faq_6.html#SEC71" indepth="true">5.2 What's the best way to send mail from a program?</a>
+<ul>
+<li><a name="TOC72" href="faq_6.html#SEC72" indepth="true">5.2.1 The simple method: /bin/mail</a>
+</li><li><a name="TOC73" href="faq_6.html#SEC73" indepth="true">5.2.2 Invoking the MTA directly: /usr/lib/sendmail</a>
+<ul>
+<li><a name="TOC74" href="faq_6.html#SEC74" indepth="true">5.2.2.1 Supplying the envelope explicitly</a>
+</li><li><a name="TOC75" href="faq_6.html#SEC75" indepth="true">5.2.2.2 Allowing sendmail to deduce the recipients</a>
+</li></ul>
+</li></ul>
+</li></ul>
+</li><li><a name="TOC76" href="faq_7.html#SEC76" indepth="true">6. Use of tools</a>
+<ul>
+<li><a name="TOC77" href="faq_7.html#SEC77" indepth="true">6.1 How can I debug the children after a fork?</a>
+</li><li><a name="TOC78" href="faq_7.html#SEC78" indepth="true">6.2 How to build library from other libraries?</a>
+</li><li><a name="TOC79" href="faq_7.html#SEC79" indepth="true">6.3 How to create shared libraries / dlls?</a>
+</li><li><a name="TOC80" href="faq_7.html#SEC80" indepth="true">6.4 Can I replace objects in a shared library?</a>
+</li><li><a name="TOC81" href="faq_7.html#SEC81" indepth="true">6.5 How can I generate a stack dump from within a running program?</a>
+</li></ul>
+</li><li><a name="TOC82" href="faq_8.html#SEC82" indepth="true">Examples</a>
+<ul>
+<li><a name="TOC83" href="faq_8.html#SEC83" indepth="true">Catching SIGCHLD</a>
+</li><li><a name="TOC84" href="faq_8.html#SEC84" indepth="true">Reading the process table -- SUNOS 4 version</a>
+</li><li><a name="TOC85" href="faq_8.html#SEC85" indepth="true">Reading the process table -- SYSV version</a>
+</li><li><a name="TOC86" href="faq_8.html#SEC86" indepth="true">Reading the process table -- AIX 4.2 version</a>
+</li><li><a name="TOC87" href="faq_8.html#SEC87" indepth="true">Reading the process table using popen and ps</a>
+</li><li><a name="TOC88" href="faq_8.html#SEC88" indepth="true">Daemon utility functions</a>
+</li><li><a name="TOC89" href="faq_8.html#SEC89" indepth="true">Modem handling example</a>
+</li><li><a name="TOC90" href="faq_8.html#SEC90" indepth="true">Job Control example</a>
+</li></ul>
+</li></ul>
+<p></p><hr><p>
+This document was generated on 1 September 2000 using the
+<a href="https://web.archive.org/web/20090607100000/http://wwwcn.cern.ch/dci/texi2html/">texi2html</a>
+translator version 1.51.</p>
+
+
+
+
+
+</body></html>

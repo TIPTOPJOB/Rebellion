@@ -1,0 +1,302 @@
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script src="analytics.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app223.us.archive.org';v.server_ms=404;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="wombat.js" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("http://www.sbin.org:80/doc/unix-faq/programmer/faq_7.html","20090608195401","https://web.archive.org/","web","/_static/",
+	      "1244490841");
+</script>
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<!-- This HTML file has been created by texi2html 1.51
+     from faq.texi on 1 September 2000 -->
+
+<title>Unix Programming Frequently Asked Questions - 6. Use of tools</title>
+
+<link media="all" href="faq_7.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+	<p style="text-align: right; float: right;">
+	<a href="https://web.archive.org/web/20090608195401/http://www.sbin.org/">www.sbin.org</a>
+	</p>
+
+Go to the <a href="index.html">table of contents</a>.
+<p></p><hr><p>
+
+
+</p><h1><a name="SEC76" href="index.html#TOC76">6. Use of tools</a></h1>
+
+
+
+<h2><a name="SEC77" href="index.html#TOC77">6.1 How can I debug the children after a fork?</a></h2>
+
+<p>
+Depending on the tools available there are various ways:
+
+</p>
+<p>
+Your debugger may have options to select whether to follow the parent or
+the child process (or both) after a <code>fork()</code>, which may be
+sufficient for some purposes.
+
+</p>
+<p>
+Alternatively, your debugger may have an option which allows you to
+attach to a running process. This can be used to attach to the child
+process after it has been started. If you don't need to examine the very
+start of the child process, this is usually sufficient. Otherwise, you
+may wish to insert a <code>sleep()</code> call after the <code>fork()</code> in the
+child process, or a loop such as the following:
+
+</p>
+
+<pre>{
+    volatile int f = 1;
+    while(f);
+}
+</pre>
+
+<p>
+which will hang the child process until you explicitly set <code>f</code> to 0
+using the debugger.
+
+</p>
+<p>
+Remember, too, that actively using a debugger isn't the only way to find
+errors in your program; utilities are available to trace system calls
+and signals on many unix flavours, and verbose logging is also often
+useful.
+
+</p>
+
+
+<h2><a name="SEC78" href="index.html#TOC78">6.2 How to build library from other libraries?</a></h2>
+
+<p>
+Assuming we're talking about an archive (static) library, the easiest
+way is to explode all the constituent libraries into their original
+objects using <samp>`ar x'</samp> in an empty directory, and combine them all
+back together.  Of course, there is the potential for collision of
+filenames, but if the libraries are large, you probably don't want to be
+combining them in the first place....
+
+</p>
+
+
+<h2><a name="SEC79" href="index.html#TOC79">6.3 How to create shared libraries / dlls?</a></h2>
+
+<p>
+The precise method for creating shared libraries varies between
+different systems. There are two main parts to the process; firstly the
+objects to be included in the shared library must be compiled, usually
+with options to indicate that the code is to be position-independent;
+secondly, these objects are linked together to form the library.
+
+</p>
+<p>
+Here's a trivial example that should illustrate the idea:
+
+</p>
+
+<pre>/* file shrobj.c */
+
+const char *myfunc()
+{
+    return "Hello World";
+}
+
+/* end shrobj.c */
+
+/* file hello.c */
+
+#include &lt;stdio.h&gt;
+
+extern const char *myfunc();
+
+main()
+{
+    printf("%s\n", myfunc());
+    return 0;
+}
+
+/* end hello.c */
+
+$ gcc -fpic -c shrobj.c
+$ gcc -shared -o libshared.so shrobj.o
+$ gcc hello.c libshared.so
+$ ./a.out
+Hello World
+
+</pre>
+
+<p>
+By far the best method if you want the library and build procedure to be
+anything approaching portable is to use GNU Libtool.  This is a small
+suite of utilities which know about the platform-dependent aspects of
+building shared libraries; you can distribute the necessary bits with
+your program, so that when the installer configures the package, he or
+she can decide what libraries to build.  Libtool works fine on systems
+which do not support shared libraries.  It also knows how to hook into
+GNU Autoconf and GNU Automake (if you use those tools to manage your
+program's build procedure).
+
+</p>
+<p>
+If you don't want to use Libtool, then for compilers other than gcc, you
+should change the compiler options as follows:
+
+</p>
+<dl>
+
+<dt>AIX 3.2 using xlc (unverified)
+</dt><dd>
+Drop the <samp>`-fpic'</samp>, and use <samp>`-bM:SRE -bE:libshared.exp'</samp> instead of 
+<samp>`-shared'</samp>. You also need to create a file <tt>`libshared.exp'</tt> 
+containing the list of symbols to export, in this case <samp>`myfunc'</samp>.
+In addition, use <samp>`-e _nostart'</samp> when linking the library (on newer
+versions of AIX, I believe this changes to <samp>`-bnoentry'</samp>).
+
+</dd><dt>SCO OpenServer 5 using the SCO Development System (unverified)
+</dt><dd>
+Shared libraries are only available on OS5 if you compile to ELF format,
+which requires the <samp>`-belf'</samp> option. Use <samp>`-Kpic'</samp> instead of
+<samp>`-fpic'</samp>, and <samp>`cc -belf -G'</samp> for the link step.
+
+</dd><dt>Solaris using SparcWorks compilers
+</dt><dd>
+Use <samp>`-pic'</samp> instead of <samp>`-fpic'</samp>, and use <samp>`ld -G'</samp> instead of
+<samp>`gcc -shared'</samp>.
+</dd></dl>
+
+<p>
+(Submission of additional entries for the above table is encouraged.)
+
+</p>
+<p>
+Other issues to watch out for:
+
+</p>
+
+<ul>
+<li>
+
+AIX and (I believe) Digital Unix don't require the -fpic option, because
+all code is position independent.
+
+</li><li>
+
+AIX normally requires that you create an `export file', which is a list
+of symbols to be exported from the shared library. Some versions of the
+linker (possibly only the SLHS linker, svld?) have an option to export
+all symbols.
+
+</li><li>
+
+If you want to refer to your shared library using the conventional
+<samp>`-l'</samp> parameter to the linker, you will have to understand how
+shared libraries are searched for at runtime on your system. The most
+common method is by using the <code>LD_LIBRARY_PATH</code> environment
+variable, but there is usually an additional option to specify this at
+link time.
+
+</li><li>
+
+Most implementations record the expected runtime location of the shared
+library internally. Thus, moving a library from one directory to another
+may prevent it from working. Many systems have an option to the linker
+to specify the expected runtime location (the <samp>`-R'</samp> linker option on
+Solaris, for example, or the <code>LD_RUN_PATH</code> environment variable).
+
+</li><li>
+
+ELF and a.out implementations may have a linker option <samp>`-Bsymbolic'</samp>
+which causes internal references within the library to be resolved.
+Otherwise, on these systems, all symbol resolution is deferred to the
+final link, and individual routines in the main program can override
+ones in the library.
+</li></ul>
+
+
+
+<h2><a name="SEC80" href="index.html#TOC80">6.4 Can I replace objects in a shared library?</a></h2>
+
+<p>
+Generally, no.
+
+</p>
+<p>
+On most systems (except AIX), when you link objects to form a shared
+library, it's rather like linking an executable; the objects don't
+retain their individual identity. As a result, it's generally not
+possible to extract or replace individual objects from a shared library.
+
+</p>
+
+
+<h2><a name="SEC81" href="index.html#TOC81">6.5 How can I generate a stack dump from within a running program?</a></h2>
+
+<p>
+Some systems provide library functions for unwinding the stack, so that
+you can (for example) generate a stack dump in an error-handling
+function. However, these are highly system-specific, and only a minority
+of systems have them.
+
+</p>
+<p>
+A possible workaround is to get your program to invoke a debugger
+<em>on itself</em> -- the details still vary slightly between systems, but
+the general idea is to do this:
+
+</p>
+
+<pre>void dump_stack(void)
+{
+    char s[160];
+
+    sprintf(s, "/bin/echo 'where\ndetach' | dbx -a %d", getpid());
+    system(s);
+        
+    return;
+}
+</pre>
+
+<p>
+You will need to tweak the commands and parameters to dbx according to
+your system, or even substitute another debugger such as <code>gdb</code>,
+but this is still the most general solution to this particular problem
+that I've ever seen. Kudos to Ralph Corderoy for this one :-)
+
+</p>
+<p>
+Here's a list of the command lines required for some systems:
+
+</p>
+<dl>
+
+<dt><b>Most systems using dbx</b>
+</dt><dd>
+<code>"/bin/echo 'where\ndetach' | dbx /path/to/program %d"</code>
+
+</dd><dt><b>AIX</b>
+</dt><dd>
+<code>"/bin/echo 'where\ndetach' | dbx -a %d"</code>
+
+</dd><dt><b>IRIX</b>
+</dt><dd>
+<code>"/bin/echo 'where\ndetach' | dbx -p %d"</code>
+</dd></dl>
+
+<p></p><hr><p>
+Go to the <a href="index.html">table of contents</a>.
+
+
+
+</p></body>
+</html>

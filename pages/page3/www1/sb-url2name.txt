@@ -1,0 +1,9 @@
+https://web.archive.org/web/20090607100000/http://www.sbin.org/doc/unix-faq/programmer/faq_toc.html	index
+https://web.archive.org/web/20090607100000/http://www.sbin.org/doc/unix-faq/programmer/faq_1.html	faq_1
+https://web.archive.org/web/20090607100000/http://www.sbin.org/doc/unix-faq/programmer/faq_2.html	faq_2
+https://web.archive.org/web/20090607100000/http://www.sbin.org/doc/unix-faq/programmer/faq_3.html	faq_3
+https://web.archive.org/web/20090607100000/http://www.sbin.org/doc/unix-faq/programmer/faq_4.html	faq_4
+https://web.archive.org/web/20090607100000/http://www.sbin.org/doc/unix-faq/programmer/faq_5.html	faq_5
+https://web.archive.org/web/20090607100000/http://www.sbin.org/doc/unix-faq/programmer/faq_6.html	faq_6
+https://web.archive.org/web/20090607100000/http://www.sbin.org/doc/unix-faq/programmer/faq_7.html	faq_7
+https://web.archive.org/web/20090607100000/http://www.sbin.org/doc/unix-faq/programmer/faq_8.html	faq_8

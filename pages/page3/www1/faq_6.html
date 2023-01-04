@@ -1,0 +1,481 @@
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<script src="analytics.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app222.us.archive.org';v.server_ms=1973;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="wombat.js" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("http://www.sbin.org:80/doc/unix-faq/programmer/faq_6.html","20090608195245","https://web.archive.org/","web","/_static/",
+	      "1244490765");
+</script>
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<!-- This HTML file has been created by texi2html 1.51
+     from faq.texi on 1 September 2000 -->
+
+<title>Unix Programming Frequently Asked Questions - 5. Miscellaneous programming</title>
+
+<link media="all" href="faq_6.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+	<p style="text-align: right; float: right;">
+	<a href="https://web.archive.org/web/20090608195245/http://www.sbin.org/">www.sbin.org</a>
+	</p>
+
+Go to the <a href="index.html">table of contents</a>.
+<p></p><hr><p>
+
+
+</p><h1><a name="SEC67" href="index.html#TOC67">5. Miscellaneous programming</a></h1>
+
+
+
+<h2><a name="SEC68" href="index.html#TOC68">5.1 How do I compare strings using wildcards?</a></h2>
+
+<p>
+The answer to <em>that</em> depends on what exactly you mean by
+`wildcards'.
+
+</p>
+<p>
+There are two quite different concepts that qualify as `wildcards'. They
+are:
+
+</p>
+<dl>
+
+<dt><em>Filename patterns</em>
+</dt><dd>
+These are what the shell uses for filename expansion (`globbing').
+
+</dd><dt><em>Regular Expressions</em>
+</dt><dd>
+These are used by editors, <code>grep</code>, etc. for matching text, but they
+normally <em>aren't</em> applied to filenames.
+</dd></dl>
+
+
+
+<h3><a name="SEC69" href="index.html#TOC69">5.1.1 How do I compare strings using filename patterns?</a></h3>
+
+<p>
+Unless you are unlucky, your system should have a function
+<code>fnmatch()</code> to do filename matching. This generally allows only the
+Bourne shell style of pattern; i.e. it recognises <samp>`*'</samp>, <samp>`[...]'</samp>
+and <samp>`?'</samp>, but probably won't support the more arcane patterns
+available in the Korn and Bourne-Again shells.
+
+</p>
+<p>
+If you don't have this function, then rather than reinvent the wheel,
+you are probably better off snarfing a copy from the BSD or GNU sources.
+
+</p>
+<p>
+Also, for the common cases of matching actual filenames, look for
+<code>glob()</code>, which will find all existing files matching a pattern.
+
+</p>
+
+
+<h3><a name="SEC70" href="index.html#TOC70">5.1.2 How do I compare strings using regular expressions?</a></h3>
+
+<p>
+There are a number of slightly different syntaxes for regular
+expressions; most systems use at least two: the one recognised by
+<code>ed</code>, sometimes known as `Basic Regular Expressions', and the one
+recognised by <code>egrep</code>, `Extended Regular Expressions'. Perl has
+it's own slightly different flavour, as does Emacs.
+
+</p>
+<p>
+To support this multitude of formats, there is a corresponding multitude
+of implementations. Systems will generally have regexp-matching
+functions (usually <code>regcomp()</code> and <code>regexec()</code>) supplied, but
+be wary; some systems have more than one implementation of these
+functions available, with different interfaces. In addition, there are
+many library implementations available. (It's common, BTW, for regexps
+to be compiled to an internal form before use, on the assumption that
+you may compare several separate strings against the same regexp.)
+
+</p>
+<p>
+One library available for this is the <samp>`rx'</samp> library, available from
+the GNU mirrors. This seems to be under active development, which may be
+a good or a bad thing depending on your point of view :-)
+
+</p>
+
+
+<h2><a name="SEC71" href="index.html#TOC71">5.2 What's the best way to send mail from a program?</a></h2>
+
+<p>
+There are several ways to send email from a Unix program. Which is the
+best method to use in a given situation varies, so I'll present two of
+them.  A third possibility, not covered here, is to connect to a local
+SMTP port (or a smarthost) and use SMTP directly; see RFC 821.
+
+</p>
+
+
+<h3><a name="SEC72" href="index.html#TOC72">5.2.1 The simple method: /bin/mail</a></h3>
+
+<p>
+For simple applications, it may be sufficient to invoke <code>mail</code>
+(usually <tt>`/bin/mail'</tt>, but could be <tt>`/usr/bin/mail'</tt> on some
+systems).
+
+</p>
+<p>
+<strong>WARNING:</strong> Some versions of UCB Mail may execute commands
+prefixed by <samp>`~!'</samp> or <samp>`~|'</samp> given in the message body even in
+non-interactive mode. This can be a security risk.
+
+</p>
+<p>
+Invoked as <samp>`mail -s 'subject' recipients...'</samp> it will take a message
+body on standard input, and supply a default header (including the
+specified subject), and pass the message to <code>sendmail</code> for
+delivery.
+
+</p>
+<p>
+This example mails a test message to <code>root</code> on the local system:
+
+</p>
+
+<pre>#include &lt;stdio.h&gt;
+
+#define MAILPROG "/bin/mail"
+
+int main()
+{
+    FILE *mail = popen(MAILPROG " -s 'Test Message' root", "w");
+    if (!mail)
+    {
+        perror("popen");
+        exit(1);
+    }
+
+    fprintf(mail, "This is a test.\n");
+
+    if (pclose(mail))
+    {
+        fprintf(stderr, "mail failed!\n");
+        exit(1);
+    }
+}
+</pre>
+
+<p>
+If the text to be sent is already in a file, then one can do:
+
+</p>
+
+<pre>    system(MAILPROG " -s 'file contents' root &lt;/tmp/filename");
+</pre>
+
+<p>
+These methods can be extended to more complex cases, but there are many
+pitfalls to watch out for:
+
+</p>
+
+<ul>
+<li>
+
+If using system() or popen(), you must be very careful about quoting
+arguments to protect them from filename expansion or word splitting
+
+</li><li>
+
+Constructing command lines from user-specified data is a common source
+of buffer-overrun errors and other security holes
+
+</li><li>
+
+This method does not allow for CC: or BCC: recipients to be specified
+(some versions of /bin/mail may allow this, some do not)
+</li></ul>
+
+
+
+<h3><a name="SEC73" href="index.html#TOC73">5.2.2 Invoking the MTA directly: /usr/lib/sendmail</a></h3>
+
+<p>
+The <code>mail</code> program is an example of a <strong>Mail User Agent</strong>, a
+program intended to be invoked by the user to send and receive mail, but
+which does not handle the actual transport. A program for transporting
+mail is called an <strong>MTA</strong>, and the most commonly found MTA on Unix
+systems is called <code>sendmail</code>. There are other MTAs in use, such as
+<code>MMDF</code>, but these generally include a program that emulates the
+usual behaviour of <code>sendmail</code>.
+
+</p>
+<p>
+Historically, <code>sendmail</code> has usually been found in <tt>`/usr/lib'</tt>,
+but the current trend is to move library programs out of <tt>`/usr/lib'</tt>
+into directories such as <tt>`/usr/sbin'</tt> or <tt>`/usr/libexec'</tt>. As a
+result, one normally invokes <code>sendmail</code> by its full path, which is
+system-dependent.
+
+</p>
+<p>
+To understand how <code>sendmail</code> behaves, it's useful to understand the
+concept of an <strong>envelope</strong>. This is very much like paper mail; the
+envelope defines who the message is to be delivered to, and who it is
+from (for the purpose of reporting errors). Contained in the envelope
+are the <strong>headers</strong>, and the <strong>body</strong>, separated by a blank line.
+The format of the headers is specified primarily by RFC 822; see also
+the MIME RFCs.
+
+</p>
+<p>
+There are two main ways to use <code>sendmail</code> to originate a message:
+either the envelope recipients can be explicitly supplied, or
+<code>sendmail</code> can be instructed to deduce them from the message
+headers.  Both methods have advantages and disadvantages.
+
+</p>
+
+
+<h4><a name="SEC74" href="index.html#TOC74">5.2.2.1 Supplying the envelope explicitly</a></h4>
+
+<p>
+The recipients of a message can simply be specified on the command line.
+This has the drawback that mail addresses can contain characters that
+give <code>system()</code> and <code>popen()</code> considerable grief, such as
+single quotes, quoted strings etc. Passing these constructs successfully
+through shell interpretation presents pitfalls. (One can do it by
+replacing any single quotes by the sequence single-quote backslash
+single-quote single-quote, then surrounding the entire address with
+single quotes. Ugly, huh?)
+
+</p>
+<p>
+Some of this unpleasantness can be avoided by eschewing the use of
+<code>system()</code> or <code>popen()</code>, and resorting to <code>fork()</code> and
+<code>exec()</code> directly. This is sometimes necessary in any event; for
+example, user-installed handlers for SIGCHLD will usually break
+<code>pclose()</code> to a greater or lesser extent.
+
+</p>
+<p>
+Here's an example:
+
+</p>
+
+<pre>#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;sysexits.h&gt;
+/* #include &lt;paths.h&gt; if you have it */
+
+#ifndef _PATH_SENDMAIL
+#define _PATH_SENDMAIL "/usr/lib/sendmail"
+#endif
+
+/* -oi means "dont treat . as a message terminator"
+ * remove ,"--" if using a pre-V8 sendmail (and hope that no-one
+ * ever uses a recipient address starting with a hyphen)
+ * you might wish to add -oem (report errors by mail)
+ */
+
+#define SENDMAIL_OPTS "-oi","--"
+
+/* this is a macro for returning the number of elements in array */
+
+#define countof(a) ((sizeof(a))/sizeof((a)[0]))
+
+/* send the contents of the file open for reading on FD to the
+ * specified recipients; the file is assumed to contain RFC822 headers
+ * &amp; body, the recipient list is terminated by a NULL pointer; returns
+ * -1 if error detected, otherwise the return value from sendmail
+ * (which uses &lt;sysexits.h&gt; to provide meaningful exit codes)
+ */
+
+int send_message(int fd, const char **recipients)
+{
+    static const char *argv_init[] = { _PATH_SENDMAIL, SENDMAIL_OPTS };
+    const char **argvec = NULL;
+    int num_recip = 0;
+    pid_t pid;
+    int rc;
+    int status;
+
+    /* count number of recipients */
+
+    while (recipients[num_recip])
+        ++num_recip;
+
+    if (!num_recip)
+        return 0;    /* sending to no recipients is successful */
+
+    /* alloc space for argument vector */
+
+    argvec = malloc((sizeof char*) * (num_recip+countof(argv_init)+1));
+    if (!argvec)
+        return -1;
+
+    /* initialise argument vector */
+
+    memcpy(argvec, argv_init, sizeof(argv_init));
+    memcpy(argvec+countof(argv_init),
+           recipients, num_recip*sizeof(char*));
+    argvec[num_recip + countof(argv_init)] = NULL;
+
+    /* may need to add some signal blocking here. */
+
+    /* fork */
+
+    switch (pid = fork())
+    {
+    case 0:   /* child */
+
+        /* Plumbing */
+        if (fd != STDIN_FILENO)
+            dup2(fd, STDIN_FILENO);
+
+        /* defined elsewhere -- closes all FDs &gt;= argument */
+        closeall(3);
+
+        /* go for it: */
+        execv(_PATH_SENDMAIL, argvec);
+        _exit(EX_OSFILE);
+
+    default:  /* parent */
+
+        free(argvec);
+        rc = waitpid(pid, &amp;status, 0);
+        if (rc &lt; 0)
+            return -1;
+        if (WIFEXITED(status))
+            return WEXITSTATUS(status);
+        return -1;
+
+    case -1:  /* error */
+        free(argvec);
+        return -1;
+    }
+}
+</pre>
+
+
+
+<h4><a name="SEC75" href="index.html#TOC75">5.2.2.2 Allowing sendmail to deduce the recipients</a></h4>
+
+<p>
+The <samp>`-t'</samp> option to <code>sendmail</code> instructs <code>sendmail</code> to
+parse the headers of the message, and use all the recipient-type headers
+(i.e.  <code>To:</code>, <code>Cc:</code> and <code>Bcc:</code>) to construct the list of
+envelope recipients. This has the advantage of simplifying the
+<code>sendmail</code> command line, but makes it impossible to specify
+recipients other than those listed in the headers. (This is not usually
+a problem.)
+
+</p>
+<p>
+As an example, here's a program to mail a file on standard input to
+specified recipients as a MIME attachment. Some error checks have been
+omitted for brevity. This requires the <tt>`mimencode'</tt> program from the
+<code>metamail</code> distribution.
+
+</p>
+
+<pre>#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;fcntl.h&gt;
+/* #include &lt;paths.h&gt; if you have it */
+
+#ifndef _PATH_SENDMAIL
+#define _PATH_SENDMAIL "/usr/lib/sendmail"
+#endif
+
+#define SENDMAIL_OPTS "-oi"
+#define countof(a) ((sizeof(a))/sizeof((a)[0]))
+
+char tfilename[L_tmpnam];
+char command[128+L_tmpnam];
+
+void cleanup(void)
+{
+    unlink(tfilename);
+}
+
+int main(int argc, char **argv)
+{
+    FILE *msg;
+    int i;
+
+    if (argc &lt; 2)
+    {
+        fprintf(stderr, "usage: %s recipients...\n", argv[0]);
+        exit(2);
+    }
+
+    if (tmpnam(tfilename) == NULL
+        || (msg = fopen(tfilename,"w")) == NULL)
+        exit(2);
+
+    atexit(cleanup);
+
+    fclose(msg);
+    msg = fopen(tfilename,"a");
+    if (!msg)
+        exit(2);
+
+    /* construct recipient list */
+
+    fprintf(msg, "To: %s", argv[1]);
+    for (i = 2; i &lt; argc; i++)
+        fprintf(msg, ",\n\t%s", argv[i]);
+    fputc('\n',msg);
+
+    /* Subject */
+
+    fprintf(msg, "Subject: file sent by mail\n");
+
+    /* sendmail can add it's own From:, Date:, Message-ID: etc. */
+
+    /* MIME stuff */
+
+    fprintf(msg, "MIME-Version: 1.0\n");
+    fprintf(msg, "Content-Type: application/octet-stream\n");
+    fprintf(msg, "Content-Transfer-Encoding: base64\n");
+
+    /* end of headers -- insert a blank line */
+
+    fputc('\n',msg);
+    fclose(msg);
+
+    /* invoke encoding program */
+
+    sprintf(command, "mimencode -b &gt;&gt;%s", tfilename);
+    if (system(command))
+        exit(1);
+
+    /* invoke mailer */
+
+    sprintf(command, "%s %s -t &lt;%s",
+            _PATH_SENDMAIL, SENDMAIL_OPTS, tfilename);
+    if (system(command))
+        exit(1);
+
+    return 0;
+}
+</pre>
+
+<p></p><hr><p>
+Go to the <a href="index.html">table of contents</a>.
+
+
+
+</p></body>
+</html>

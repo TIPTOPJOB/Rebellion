@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../sitemap.xsl" type="text/xsl" media="all"?>
+<site>
+<page file="index.html" text="Unix Programming Frequently Asked Questions - Table of Contents" title="Unix Programming Frequently Asked Questions - Table of Contents">
+<page file="faq_1.html" text="About this FAQ" title="Unix Programming Frequently Asked Questions - Table of Contents"/>
+<page file="faq_2.html" text="1. Process Control" title="Unix Programming Frequently Asked Questions - Table of Contents"/>
+<page file="faq_3.html" text="2. General File handling (including pipes and sockets)" title="Unix Programming Frequently Asked Questions - 1. Process Control"/>
+<page file="faq_4.html" text="3. Terminal I/O" title="Unix Programming Frequently Asked Questions - 1. Process Control"/>
+<page file="faq_5.html" text="4. System Information" title="Unix Programming Frequently Asked Questions - 3. Terminal I/O"/>
+<page file="faq_6.html" text="5. Miscellaneous programming" title="Unix Programming Frequently Asked Questions - 3. Terminal I/O"/>
+<page file="faq_7.html" text="6. Use of tools" title="Unix Programming Frequently Asked Questions - 5. Miscellaneous programming"/>
+<page file="faq_8.html" text="Examples" title="Unix Programming Frequently Asked Questions - 5. Miscellaneous programming"/>
+</page>
+</site>
