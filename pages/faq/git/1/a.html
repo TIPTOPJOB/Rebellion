@@ -4,32 +4,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
 <title>без jquery</title>
 <script type="text/javascript">
-function createRequest ()
+function createRequest()
 {
 	var request = null;
 	try
 	{
-		request = new XMLHttpRequest ();
+		request = new XMLHttpRequest();
 	}
-	catch (e)
+	catch(e)
 	{
 		try
 		{
-			request = new ActiveXObject ("Microsoft.XMLHTTP");
+			request = new ActiveXObject("Microsoft.XMLHTTP");
 		}
-		catch (e) {}
+		catch(e){}
 	}
 	return request;
 }
 
-function getFile (name)
+function getFile(name)
 {
 
-	var req = createRequest ();
+	var req = createRequest();
 	req.open('GET', name, false);
 //	req.overrideMimeType('text/plain; charset=windows-1251');
 	req.send(null);
-	document.getElementById ('mytext').firstChild.data = req.responseText;
+	document.getElementById('mytext').firstChild.data = req.responseText;
 
 }
 </script>
