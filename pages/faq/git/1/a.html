@@ -2,36 +2,76 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
-<script src="js/jquery-2.2.3.min.js"></script>
+<!-- <script src="js/jquery-2.2.3.min.js"></script> -->
 <script type="text/javascript">
-	var test;
-	$.ajax({
-			url: "https://tiptopjob.github.io/Rebellion/pages/faq/git/1/text.txt",
-			dataType: "text",
-			async: true,
-			success: function(msg){
-				test = msg;
-				alert('Содержимое файла: '+test);
-			}
-		});
-	
 	function getFile(name)
 	{
-	
-		var req =  new XMLHttpRequest;
-		req.open('GET', name, true);
-		req.send(null);
-		document.getElementById('mytext').firstChild.data = req.responseText;
+		//const verseChoose = document.querySelector('select');
+		const poemDisplay = document.querySelector('pre');
+		const url = name;
+		// Call `fetch()`, passing in the URL.
+		fetch(url)
+          // fetch() returns a promise. When we have received a response from the server,
+          // the promise's `then()` handler is called with the response.
+          .then( response => {
+            // Our handler throws an error if the request did not succeed.
+            if (!response.ok) {
+              throw new Error(`HTTP error: ${response.status}`);
+            }
+            // Otherwise (if the response succeeded), our handler fetches the response
+            // as text by calling response.text(), and immediately returns the promise
+            // returned by `response.text()`.
+            return response.text();
+          })
+          // When response.text() has succeeded, the `then()` handler is called with
+          // the text, and we copy it into the `poemDisplay` box.
+          .then( text => poemDisplay.textContent = text )
+          // Catch any errors that might happen, and display a message
+          // in the `poemDisplay` box.
+          .catch( error => poemDisplay.textContent = `Could not fetch verse: ${error}`);
+
 	
 	};
 	
-	</script>
+</script>
 <title>без jquery</title>
+<style>
+	html, pre {
+	  font-family: sans-serif;
+	}
+
+	body {
+	  width: 500px;
+	  margin: 0 auto;
+	  background-color: #ccc;
+	}
+
+	pre {
+	  line-height: 1.5;
+	  letter-spacing: 0.05rem;
+	  padding: 1rem;
+	  background-color: white;
+	}
+
+	label {
+	  width: 200px;
+	  margin-right: 33px;
+	}
+
+	select {
+	  width: 350px;
+	  padding: 5px;
+	}
+
+  </style>
 </head>
-<body onload="getFile('https://tiptopjob.github.io/Rebellion/pages/faq/git/1/text.txt')">
+<body >
+<pre>
 
-
-<div id="mytext"></div>
+</pre>
+<script type="text/javascript">
+getFile('text.txt')
+</script>
 </body>
 
 </html>
