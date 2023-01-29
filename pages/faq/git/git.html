@@ -1,28 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ GIT</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+<!-- <script src="js/jquery-2.2.3.min.js"></script> -->
+<script type="text/javascript">
+	function getFile(name)
+	{
+        const poemDisplay = document.querySelector('pre');
+		const url = name;
+		// Call `fetch()`, passing in the URL.
+		fetch(url)
+          // fetch() returns a promise. When we have received a response from the server,
+          // the promise's `then()` handler is called with the response.
+          .then( response => {
+            // Our handler throws an error if the request did not succeed.
+            if (!response.ok) {
+              throw new Error(`HTTP error: ${response.status}`);
+            }
+            // Otherwise (if the response succeeded), our handler fetches the response
+            // as text by calling response.text(), and immediately returns the promise
+            // returned by `response.text()`.
+            return response.text();
+          })
+          // When response.text() has succeeded, the `then()` handler is called with
+          // the text, and we copy it into the `poemDisplay` box.
+          //.then( text => poemDisplay.textContent = 'content file:\n'+ text )
+		  .then( text => poemDisplay.textContent = text )
+          // Catch any errors that might happen, and display a message
+          // in the `poemDisplay` box.
+          .catch( error => poemDisplay.textContent = `Could not fetch verse: ${error}`);
+
+	
+	};
+	
+</script>
+<title>без jquery</title>
+<style>
+	html, pre {
+	  font-family: sans-serif;
+	}
+
+	body {
+	  width: 800px;
+	  margin: 0 auto;
+	  background-color: #ccc;
+	}
+
+	pre {
+	  line-height: 1.5;
+	  letter-spacing: 0.05rem;
+	  padding: 1rem;
+	  background-color: white;
+	}
+
+	label {
+	  width: 200px;
+	  margin-right: 33px;
+	}
+
+	select {
+	  width: 350px;
+	  padding: 5px;
+	}
+
+  </style>
 </head>
-<body>
-<H1>FAQ GIT</H1> 
-<H1>LINKS MY FAQ:</H1>
-</br>
-<a href="3/ajax-start.html">load text file A</a>  
-</br>
-<a href="3/fetch-finish.html">load text file B</a>  
-</br>
-</br>
-<a href="1/a.html">load text file A</a>  
-</br>
-<a href="2/a.html">load text file B</a>  
-</br>
-<a href="1/b.html">load text</a>  
-</br>
-<a href="1/c.html">load text</a>  
-</br>
-<a href="1/text.txt">clone and first setting git with ssh</a> 
+<body >
+    <h1>Open choosed files</h1>
+
+    <form>
+      <label for="verse-choose">Choose a verse</label>
+      <select id="verse-choose" name="verse-choose">
+        <option>text</option>
+        <option>text_A</option>
+        <option>text_B</option>
+        <option>text_C</option>
+      </select>
+    </form>	
+<pre>
+
+</pre>
+<script type="text/javascript">
+	const verseChoose = document.querySelector('select');
+	verseChoose.addEventListener('change', () => {
+        const verse = verseChoose.value;
+        updateDisplay(verse);
+    });
+
+    function updateDisplay(verse) {
+        //verse = verse.replace(' ', '');
+        //verse = verse.toLowerCase();
+        const url = `txt/${verse}.txt`;	
+	  
+		getFile(url)
+	}
+</script>
 </body>
+
 </html>
