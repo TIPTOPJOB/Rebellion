@@ -72,10 +72,9 @@
       <label for="verse-choose">Choose a verse</label>
       <select id="verse-choose" name="verse-choose">
         <option>none</option>
-        <option>first setting git</option>
-        <option>text_A</option>
-        <option>text_B</option>
-        <option>text_C</option>
+        <option>yt-dlp.conf</option>
+        <option>cm1.txt</option>
+        <option>start.sh</option>
       </select>
     </form>	
 <pre>
@@ -91,7 +90,7 @@
     function updateDisplay(verse) {
         //verse = verse.replace(' ', '');
         //verse = verse.toLowerCase();
-        const url = `txt/${verse}.txt`;	
+        const url = `txt/${verse}`;	
 	  
 		getFile(url)
 	}
