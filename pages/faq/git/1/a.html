@@ -80,17 +80,19 @@
 
 </pre>
 <script type="text/javascript">
-const verseChoose = document.querySelector('select');
-verseChoose.addEventListener('change', () => {
+	const verseChoose = document.querySelector('select');
+	verseChoose.addEventListener('change', () => {
         const verse = verseChoose.value;
         updateDisplay(verse);
-      });
+    });
 
-      function updateDisplay(verse) {
+    function updateDisplay(verse) {
         //verse = verse.replace(' ', '');
         //verse = verse.toLowerCase();
         const url = `${verse}.txt`;	
-getFile(url)
+	  
+		getFile(url)
+	}
 </script>
 </body>
 
