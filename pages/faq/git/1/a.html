@@ -6,8 +6,7 @@
 <script type="text/javascript">
 	function getFile(name)
 	{
-		//const verseChoose = document.querySelector('select');
-		const poemDisplay = document.querySelector('pre');
+        const poemDisplay = document.querySelector('pre');
 		const url = name;
 		// Call `fetch()`, passing in the URL.
 		fetch(url)
@@ -81,6 +80,16 @@
 
 </pre>
 <script type="text/javascript">
+const verseChoose = document.querySelector('select');
+verseChoose.addEventListener('change', () => {
+        const verse = verseChoose.value;
+        updateDisplay(verse);
+      });
+
+      function updateDisplay(verse) {
+        verse = verse.replace(' ', '');
+        verse = verse.toLowerCase();
+        const url = `${verse}.txt`;	
 getFile('text.txt')
 </script>
 </body>
