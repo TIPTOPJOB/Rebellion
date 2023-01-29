@@ -4,34 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
 <title>без jquery</title>
 <script type="text/javascript">
-function createRequest()
-{
-	var request = null;
-	try
-	{
-		request = new XMLHttpRequest();
-	}
-	catch(e)
-	{
-		try
-		{
-			request = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		catch(e){}
-	}
-	return request;
-}
 
 function getFile(name)
 {
 
-	var req = createRequest();
-	req.open('GET', name, false);
-//	req.overrideMimeType('text/plain; charset=windows-1251');
+	var req =  new XMLHttpRequest;
+	req.open('GET', name, true);
 	req.send(null);
 	document.getElementById('mytext').firstChild.data = req.responseText;
 
-}
+};
+
 </script>
 </head>
 <body onload="getFile('text.txt')">
