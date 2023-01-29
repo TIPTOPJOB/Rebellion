@@ -2,33 +2,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
-<title>без jquery</title>
 <script src="js/jquery-2.2.3.min.js"></script>
 <script type="text/javascript">
-var test;
-$.ajax({
-        url: "text.txt",
-        dataType: "text",
-        async: true,
-        success: function(msg){
-            test = msg;
-            alert('Содержимое файла: '+test);
-        }
-    });
+	var test;
+	$.ajax({
+			url: "text.txt",
+			dataType: "text",
+			async: true,
+			success: function(msg){
+				test = msg;
+				alert('Содержимое файла: '+test);
+			}
+		});
 	
-function getFile(name)
-{
-
-	var req =  new XMLHttpRequest;
-	req.open('GET', name, true);
-	req.send(null);
-	document.getElementById('mytext').firstChild.data = req.responseText;
-
-};
-
-</script>
+	function getFile(name)
+	{
+	
+		var req =  new XMLHttpRequest;
+		req.open('GET', name, true);
+		req.send(null);
+		document.getElementById('mytext').firstChild.data = req.responseText;
+	
+	};
+	
+	</script>
+<title>без jquery</title>
 </head>
-<body onload="getFile('text.txt')">
+<body onload="getFile('https://tiptopjob.github.io/Rebellion/pages/faq/git/1/text.txt')">
+
+
 <div id="mytext"></div>
 </body>
 
