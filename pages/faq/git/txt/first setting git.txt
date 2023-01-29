@@ -21,3 +21,11 @@ git push origin master
 git pull origin master
 git remote add origin https://github.com/TIPTOPJOB/ovpn.git
 git clone git@github.com:TIPTOPJOB/ovpn.git
+
+git clone git@github.com:TIPTOPJOB/yt-dlp.git
+git clone git@github.com:TIPTOPJOB/ovpn.git
+git clone git@github.com:TIPTOPJOB/Rebellion.git
+git clone git@github.com:TIPTOPJOB/tiptop.git
+git clone git@github.com:TIPTOPJOB/Futures-CSharp-demo.git
+git clone 
+git clone 
