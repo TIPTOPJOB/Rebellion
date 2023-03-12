@@ -1,0 +1,7 @@
+
+ErrorDocument 404 /manual/en/3.4/404.html
+RedirectMatch \"^/manual/en/3.4/addons/import_export/io_(.*)\" \"/manual/en/3.4/addons/import_export/$1\"
+RedirectMatch \"^/manual/en/3.4/modeling/geometry_nodes/curve/curve_parameter.html\" \"/manual/en/3.4/modeling/geometry_nodes/curve/spline_parameter.html\" 
+RedirectMatch \"^/manual/en/3.4/modeling/geometry_nodes/utilities/compare_floats.html\" \"/manual/en/3.4/modeling/geometry_nodes/utilities/compare.html\" 
+RedirectMatch \"^/manual/en/3.4/about/contribute\" \"/manual/en/3.4/contribute/$1\"
+RedirectMatch \"^/manual/en/3.4/about/index.html\" \"/manual/en/3.4/contribute/index.html$1\"
